@@ -6,3 +6,4 @@ RUN sed -i -e'/# by default do not expose the netdata port/,+1d' /etc/netdata/ne
 RUN mkdir /var/lib/netdata && \
 	chown netdata:root /var/lib/netdata && \
 	chmod 770 /var/lib/netdata
+CMD ["/usr/sbin/netdata", "-D"]
