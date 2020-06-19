@@ -18,7 +18,7 @@ run: stop
 		--cap-add SYS_PTRACE \
 		--security-opt apparmor=unconfined \
 		netdata-smol:latest \
-		/opt/netdata/bin/netdata -D
+		/usr/sbin/netdata -D
 
 shell: stop
 	docker run \
