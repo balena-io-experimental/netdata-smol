@@ -1,11 +1,6 @@
-FROM alpine:3.7 as build
-ADD ./netdata-latest.gz.run /opt/
-RUN chmod 755 /opt/netdata-latest.gz.run
-RUN /opt/netdata-latest.gz.run --quiet --accept --noprogress --nox11
-RUN rm /opt/netdata-latest.gz.run
-
-FROM alpine:3.7 as run
-COPY --from=build /etc/passwd /etc/passwd
-COPY --from=build /etc/group /etc/group
-COPY --from=build /etc/shadow /etc/shadow
-COPY --from=build /opt/netdata /opt/netdata
+FROM alpine:3.12.0
+# Can prolly remove this one, but duplicating history
+RUN apk update
+RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories && cat /etc/apk/repositories
+RUN apk update
+RUN apk add netdata --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
